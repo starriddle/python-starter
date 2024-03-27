@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+# Python Demo 五角星
+
 from turtle import *
 
 #setup(700,700)
