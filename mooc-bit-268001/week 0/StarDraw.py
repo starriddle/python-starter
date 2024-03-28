@@ -4,7 +4,7 @@
 
 from turtle import *
 
-#setup(700,700)
+# setup(700,700)
 color("blue", "red")
 begin_fill()
 for i in range(5):
