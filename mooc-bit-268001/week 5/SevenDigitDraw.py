@@ -55,15 +55,15 @@ def draw_date(date, distance):
     turtle.pencolor("red")
     for i in date:
         if i == "-":
-            turtle.write("年", align="left", font=("Noto Serif CJK SC", 20, "bold"))
+            turtle.write("年", align="left", font=("Noto Sans CJK SC", 20, "bold"))
             turtle.pencolor("green")
             turtle.forward(distance)
         elif i == "=":
-            turtle.write("月", align="left", font=("Noto Serif CJK SC", 20, "bold"))
+            turtle.write("月", align="left", font=("Noto Sans CJK SC", 20, "bold"))
             turtle.pencolor("blue")
             turtle.forward(distance)
         elif i == "+":
-            turtle.write("日", align="left", font=("Noto Serif CJK SC", 20, "bold"))
+            turtle.write("日", align="left", font=("Noto Sans CJK SC", 20, "bold"))
         else:
             draw_digit(eval(i), distance)
 
