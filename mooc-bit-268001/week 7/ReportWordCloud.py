@@ -13,6 +13,8 @@
 使用三方库 jieba 进行分词
 使用三方库 wordcloud 输出词云
 使用三方库 imageio 读取图片
+
+优化：过滤无意义的单字词语
 """
 
 import jieba
