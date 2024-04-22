@@ -23,7 +23,6 @@ items = list(counts.items())
 items.sort(key=lambda x: x[1], reverse=True)
 word, count = items[0]
 for item in items:
-    print(item)
     if item[1] < count:
         break
     if item[0] > word:
