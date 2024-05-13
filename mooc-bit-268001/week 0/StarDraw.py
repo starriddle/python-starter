@@ -4,8 +4,11 @@
 
 from turtle import *
 
-# setup(700,700)
+pu()
+goto(-100, 0)
+pd()
 color("blue", "red")
+
 begin_fill()
 for i in range(5):
     fd(200)
