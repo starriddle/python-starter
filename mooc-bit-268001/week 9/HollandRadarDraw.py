@@ -22,7 +22,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 
-matplotlib.rcParams['font.family'] = 'SimHei'
+# Font Family
+matplotlib.rcParams['font.family'] = 'Inziu IosevkaCC Slab SC'
 
 # data
 radar_labels = np.array(['研究型(I)', '艺术型(A)', '社会型(S)',
