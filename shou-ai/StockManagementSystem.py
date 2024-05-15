@@ -11,8 +11,10 @@
   1 若库存为空，则将当前商品信息加入库存列表
   2 若库存不为空
     2.1 通过遍历库存列表，比较商品编号，确认库中是否有当前商品。
-    2.2 若有当前商品，则增加当前商品数量，然后退出遍历。
-    2.3 若没有当前商品，则将当前商品信息加入库存列表
+    2.2 若有当前商品，则检查商品名称/价格是否一致
+        2.2.1 如一致，则增加当前商品数量，入库成功。
+        2.2.2 如不一致，则入库失败
+    2.3 若没有当前商品，则将当前商品信息加入库存列表，入库成功
 
 商品出库
 - 输入商品名称或序列号和数量出库，处理商品重名情况，进行出库操作。
@@ -224,17 +226,23 @@ class Stock(object):
         """
         商品入库
         :param product: 入库商品
-        :return:
+        :return: 入库成功返回 True，否则返回 False
         """
-        exists = False
         if len(self.goods) > 0:
             for good in self.goods:
                 if good.index == product.index:
+                    print("ROBOT：原库存中存在该商品！")
+                    good.format_print()
+                    if good.name != product.name or good.price != product.price:
+                        print("ROBOT：入库失败：商品名称/价格不一致！")
+                        return False
                     good.number += product.number
-                    exists = True
-                    break
-        if not exists:
-            self.goods.append(product)
+                    print("ROBOT：入库成功！")
+                    return True
+        print("ROBOT：原库存没有该商品！")
+        self.goods.append(product)
+        print("ROBOT：入库成功！")
+        return True
 
     def stack_out(self, product):
         """
@@ -432,8 +440,9 @@ if __name__ == "__main__":
             stock.list()
         elif key == 'i':
             name, price, number, index = (input("请输入商品名称 价格 数量 编号：").split())
-            stock.stock_in(Product(name, float(price), int(number), index))
-            stock.list()
+            success = stock.stock_in(Product(name, float(price), int(number), index))
+            if success:
+                stock.list()
         elif key == 'o':
             selected = int(input("请选择 0-商品名称 或 1-商品编号："))
             s = input("请输入商品名称：") if selected == 0 else input("请输入商品编号：")
