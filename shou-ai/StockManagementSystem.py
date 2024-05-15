@@ -143,8 +143,12 @@ class Product(object):
         格式化打印产品信息
         :return:
         """
-        print("商品编号: {} | 商品名称: {} | 商品数量: {} | 商品价格: {}"
-              .format(self.index, self.name, self.number, self.price))
+        n = 0
+        for c in self.name:
+            n += 1 if ord(c) < 128 else 2
+        name_str = self.name + ' ' * (10 - n)
+        print("商品编号: {} | 商品名称: {} | 商品数量: {:5d} | 商品价格: {:8.2f}"
+              .format(self.index, name_str, self.number, self.price))
 
 
 class Stock(object):
@@ -178,12 +182,12 @@ class Stock(object):
         显示所有商品列表
         :return:
         """
-        print("===============================================================")
-        print("                         所有商品列表                          ")
-        print("---------------------------------------------------------------")
+        print("=============================================================================")
+        print("                                所有商品列表                                 ")
+        print("-----------------------------------------------------------------------------")
         for good in self.goods:
             good.format_print()
-        print("===============================================================")
+        print("=============================================================================")
 
     def statistics(self, min_number=15):
         """
@@ -200,21 +204,21 @@ class Stock(object):
             total_amount += good.number * good.price
             if good.number < min_number:
                 lack_goods.append(good)
-        print("===============================================================")
-        print("                         商品统计信息                          ")
-        print("---------------------------------------------------------------")
+        print("=============================================================================")
+        print("                                商品统计信息                                 ")
+        print("-----------------------------------------------------------------------------")
         print("总计：\n"
               "        商品种类: {}\n"
               "        商品总数: {}\n"
               "        商品总额: {}\n"
               "库存不足商品种类: {}"
               .format(len(self.goods), total_number, total_amount, len(lack_goods)))
-        print("---------------------------------------------------------------")
-        print("                         商品统计信息                          ")
-        print("---------------------------------------------------------------")
+        print("-----------------------------------------------------------------------------")
+        print("                              库存不足商品列表                               ")
+        print("-----------------------------------------------------------------------------")
         for good in lack_goods:
             good.format_print()
-        print("===============================================================")
+        print("=============================================================================")
 
     def stock_in(self, product):
         """
@@ -293,15 +297,15 @@ class Stock(object):
                     results.append(good)
         # 输出查找结果
         if print_flag:
-            print("===========================================================")
-            print("                     商品查询结果列表                      ")
-            print("-----------------------------------------------------------")
+            print("=============================================================================")
+            print("                              商品查询结果列表                               ")
+            print("-----------------------------------------------------------------------------")
             if len(results) == 0:
                 print("ROBOT：商品未找到，该商品不在库存中！")
             else:
                 for result in results:
                     result.format_print()
-            print("===========================================================")
+            print("=============================================================================")
         # 返回查找结果列表
         return results
 
@@ -321,6 +325,7 @@ class StockIO(object):
         """
         goods = stock.get_goods()
         if len(goods) == 0:
+            print("库存为空！")
             return
         f = open(file_path, "w", encoding="UTF-8")
         for good in goods:
@@ -341,19 +346,19 @@ class StockIO(object):
         lines = f.readlines()
         f.close()
         goods = []
-        print("===============================================================")
-        print("                    从 TXT 文件导入库存信息                    ")
+        print("=============================================================================")
+        print("                           从 TXT 文件导入库存信息                           ")
+        print("预计导入商品 %d 种" % (len(lines)))
+        print("-----------------------------------------------------------------------------")
         for line in lines:
-            print("-----------------------------------------------------------")
-            print(line)
             strs = line.split(",")
-            print(strs)
             good = Product(strs[0].strip(), float(strs[1].strip()),
                            int(strs[2].strip()), strs[3].strip())
             good.format_print()
             goods.append(good)
-        print("===============================================================")
+        print("=============================================================================")
         stock.set_goods(goods)
+        print("从 TXT 文件导入成功！")
 
     @staticmethod
     def export_to_excel(stock, excel_path):
@@ -363,19 +368,23 @@ class StockIO(object):
         :param excel_path: EXCEL 文件路径
         :return:
         """
+        goods = stock.get_goods()
+        if len(goods) == 0:
+            print("库存为空！")
+            return
         book = xlwt.Workbook(encoding="UTF-8")
         sheet = book.add_sheet("库存列表")
         row = 0
         sheet.write(row, 0, "名称")
         sheet.write(row, 1, "价格")
-        sheet.write(row, 1, "数量")
-        sheet.write(row, 1, "编号")
-        for good in stock.get_goods():
+        sheet.write(row, 2, "数量")
+        sheet.write(row, 3, "编号")
+        for good in goods:
             row += 1
             sheet.write(row, 0, good.name)
             sheet.write(row, 1, good.price)
-            sheet.write(row, 1, good.number)
-            sheet.write(row, 1, good.index)
+            sheet.write(row, 2, good.number)
+            sheet.write(row, 3, good.index)
         book.save(excel_path)
         print("导出到 EXCEL 文件成功！")
 
@@ -389,12 +398,12 @@ class StockIO(object):
         """
         book = xlrd.open_workbook(excel_path)
         sheet = book.sheet_by_name("库存列表")
-        print("===============================================================")
-        print("                   从 EXCEL 文件导入库存信息                   ")
-        print(sheet.nrows, sheet.ncols)
+        print("=============================================================================")
+        print("                          从 EXCEL 文件导入库存信息                          ")
+        print("预计导入商品 %d 种" % (sheet.nrows - 1))
+        print("-----------------------------------------------------------------------------")
         goods = []
         for row in range(1, sheet.nrows):
-            print("-----------------------------------------------------------")
             name = str(sheet.cell(row, 0).value)
             price = float(sheet.cell(row, 1).value)
             number = int(sheet.cell(row, 2).value)
@@ -402,8 +411,9 @@ class StockIO(object):
             good = Product(name, price, number, index)
             good.format_print()
             goods.append(good)
-        print("===============================================================")
+        print("=============================================================================")
         stock.set_goods(goods)
+        print("从 EXCEL 文件导入成功！")
 
 
 if __name__ == "__main__":
