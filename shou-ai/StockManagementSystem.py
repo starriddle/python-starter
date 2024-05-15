@@ -404,3 +404,47 @@ class StockIO(object):
             goods.append(good)
         print("===============================================================")
         stock.set_goods(goods)
+
+
+if __name__ == "__main__":
+    stock = Stock()
+    while True:
+        print("\n操作指南：\n"
+              "    E: 退出程序，L：商品列表\n"
+              "    I：商品入库，O：商品出库，S：商品查询\n"
+              "    S1：库存统计(默认参数)，S2：库存统计(设置参数)\n"
+              "    OF：导出商品列表至文件，IF：从文件导入商品列表\n"
+              "    OE：导出商品列表至EXCEL，IE：从EXCEL导入商品列表")
+        key = input("请输入操作指令：").lower()
+        if key == 'e':  # 退出程序
+            break
+        elif key == 'l':  # 商品列表
+            stock.list()
+        elif key == 'i':
+            name, price, number, index = (input("请输入商品名称 价格 数量 编号：").split())
+            stock.stock_in(Product(name, float(price), int(number), index))
+            stock.list()
+        elif key == 'o':
+            selected = int(input("请选择 0-商品名称 或 1-商品编号："))
+            s = input("请输入商品名称：") if selected == 0 else input("请输入商品编号：")
+            number = int(input("请输入商品数量："))
+            product = Product(name=s, number=number) if selected == 0 else Product(number=number, index=s)
+            stock.stack_out(product)
+        elif key == 's':
+            selected = int(input("请选择 0-商品名称 或 1-商品编号："))
+            s = input("请输入商品名称：") if selected == 0 else input("请输入商品编号：")
+            product = Product(name=s) if selected == 0 else Product(index=s)
+            stock.search(product)
+        elif key == 's1':  # 库存统计
+            stock.statistics()
+        elif key == 's2':  # 库存统计
+            min_number = int(input("请输入商品库存下限："))
+            stock.statistics(min_number)
+        elif key == 'of':  # 导出到 TXT
+            StockIO.export_to_txt(stock, 'GOODS.txt')
+        elif key == 'if':  # 从 TXT 导入
+            StockIO.import_from_txt(stock, 'GOODS.txt')
+        elif key == 'oe':  # 导出到 EXCEL
+            StockIO.export_to_excel(stock, 'GOODS.xls')
+        elif key == 'ie':  # 从 EXCEL 导入
+            StockIO.import_from_excel(stock, 'GOODS.xls')
