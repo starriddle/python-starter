@@ -3,6 +3,8 @@
 """
 网页截屏保存
 
+使用 浏览器驱动 后台模拟页面并保存为图片
+
 第三方库：selenium，Web 自动化测试工具
 Web 驱动：chromedriver、MicrosoftWebDriver、geckodriver，保存至 python 解释器相同目录下
 """
