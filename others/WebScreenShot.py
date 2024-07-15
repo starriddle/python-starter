@@ -7,6 +7,19 @@
 
 第三方库：selenium，Web 自动化测试工具
 Web 驱动：chromedriver、MicrosoftWebDriver、geckodriver，保存至 python 解释器相同目录下
+
+chromedriver：
+  - 最新版：https://googlechromelabs.github.io/chrome-for-testing/#stable
+  - 阿里云镜像：
+    - 旧版：https://registry.npmmirror.com/binary.html?path=chromedriver/
+    - 新版：https://registry.npmmirror.com/binary.html?path=chrome-for-testing/
+
+MicrosoftWebDriver：
+  - 官方：https://developer.microsoft.com/zh-cn/microsoft-edge/tools/webdriver?form=MA13LH
+
+geckodriver：
+  - 官方：https://github.com/mozilla/geckodriver
+  - 阿里云镜像：https://registry.npmmirror.com/binary.html?path=geckodriver/
 """
 
 from selenium import webdriver
