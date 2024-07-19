@@ -2,7 +2,7 @@
 
 Python 学习实践练习
 
-## mooc-bit-268001
+## bit-268001
 
 北京理工大学 国家精品在线开放课 《[Python语言程序设计](https://www.icourse163.org/course/BIT-268001)》（中国大学MOOC平台）
 
