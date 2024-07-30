@@ -59,3 +59,20 @@ print('subn:', tp)
 regex = re.compile(r'\d{3}')
 print('regex subn:', regex.subn('number', 'BIT 100081 TSU 100081'))
 print('regex findall:', regex.findall('BIT 100081 TSU 100081'))
+
+# Match 对象
+match = re.search(r'\d{3}', 'BIT 100081')
+print(match.string)     # 待匹配的文本
+print(match.re)         # 匹配时使用的patter对象(正则表达式)
+print(match.pos)        # 正则表达式搜索文本的开始位置 pos
+print(match.endpos)     # 正则表达式搜索文本的结束位置 endpos-1
+print(match.group(0))   # 获得匹配后的字符串
+print(match.start())    # 匹配字符串在原始字符串的开始位置 start
+print(match.end())      # 匹配字符串在原始字符串的结束位置 end-1
+print(match.span())     # 返回(.start(), .end())，即[start, end-1] 或[start, end)
+
+# 匹配逻辑：贪婪匹配 / 最小匹配
+match = re.search(r'PY.*N', 'PYANBNCNDN')
+print('贪婪匹配：', match.group(0))  # Re库默认采用贪婪匹配，即匹配最长的子串
+match = re.search(r'PY.*?N', 'PYANBNCNDN')
+print('最小匹配：', match.group(0))  # 在长度不确定的操作符后加?，即为最小匹配，即匹配最短的子串
