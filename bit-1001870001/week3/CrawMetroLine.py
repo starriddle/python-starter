@@ -8,6 +8,7 @@
 """
 
 import requests
+from bs4 import BeautifulSoup
 import re
 
 
@@ -28,9 +29,35 @@ def get_html_text(line_num):
         return ''
 
 
-def parse_page(line_num, html):
+def parse_page_bs(line_num, html):
     """
-    根据页面内容提取站点信息
+    根据页面内容提取站点信息，使用 beautifulsoup4 库
+
+    :param line_num: 地铁线号
+    :param html: 页面内容
+    :return: 站点信息列表
+    """
+    result = [[line_num]]
+    soup = BeautifulSoup(html, 'html.parser')
+    zhuango = soup.find('div', attrs={'class': 'zhuango'})
+    splits = zhuango.text.split()
+    result[0].append(splits[0])
+    result[0].append(splits[2])
+    linenames = soup.find_all('div', attrs={'class': 'linename'})
+    for linename in linenames:
+        name = linename.find('a').text
+        cz = [name]
+        script = linename.find('script')
+        if script:
+            huan = script.text.split("'")[1].split(",")
+            cz.extend(huan)
+        result.append(cz)
+    return result
+
+
+def parse_page_re(line_num, html):
+    """
+    根据页面内容提取站点信息，使用 re 库
 
     :param line_num: 地铁线号
     :param html: 页面内容
@@ -83,7 +110,7 @@ def main():
     """
     line = 2
     html = get_html_text(line)
-    ls = parse_page(line, html)
+    ls = parse_page_bs(line, html)
     print_list(ls)
 
 
