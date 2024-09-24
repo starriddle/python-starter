@@ -277,3 +277,86 @@ class DLinkedList:
                 return True
             current = current.next
         return False
+
+    def get(self, index):
+        if index < 0 or index >= self.size:
+            raise IndexError("Index out of range")
+        current = self.head.next
+        for _ in range(index):
+            current = current.next
+        return current.value
+
+    def get_index(self, value):
+        current = self.head.next
+        index = 0
+        while current is not None:
+            if current.value == value:
+                return index
+            current = current.next
+            index += 1
+        return -1
+
+    def set(self, index, value):
+        if index < 0 or index >= self.size:
+            raise IndexError("Index out of range")
+        current = self.head.next
+        for _ in range(index):
+            current = current.next
+        current.value = value
+
+    def append(self, value):
+        node = DLinkedList.DLinkedNode(value)
+        tail = self.head
+        if tail.next is not None:
+            tail = tail.next
+        tail.next = node
+        node.prev = tail
+        self.size += 1
+
+    def insert(self, index, value):
+        if index < 0 or index > self.size:
+            raise IndexError("Index out of range")
+        node = DLinkedList.DLinkedNode(value)
+        current = self.head
+        for _ in range(index):
+            current = current.next
+        node.next = current.next
+        node.prev = current
+        if current.next is not None:
+            current.next.prev = node
+        current.next = node
+        self.size += 1
+
+    def remove(self, value):
+        current = self.head.next
+        while current is not None:
+            if current.value == value:
+                current.prev.next = current.next
+                if current.next is not None:
+                    current.next.prev = current.prev
+                self.size -= 1
+                return
+            current = current.next
+
+    def delete(self, index):
+        if index < 0 or index >= self.size:
+            raise IndexError("Index out of range")
+        current = self.head.next
+        for _ in range(index):
+            current = current.next
+        current.prev.next = current.next
+        if current.next is not None:
+            current.next.prev = current.prev
+        self.size -= 1
+        return current.value
+
+    def clear(self):
+        self.head.next = None
+        self.size = 0
+
+    def display(self):
+        current = self.head.next
+        while current is not None:
+            print(current.value, end=" ")
+            current = current.next
+        print()
