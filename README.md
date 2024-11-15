@@ -1,29 +1,11 @@
-# Python 入门学习
+# Python 从入门到入土
 
-Python 学习实践练习
+Python 代码实践练习
 
-## bit-268001
+## MOOC
 
-北京理工大学 国家精品在线开放课 《[Python语言程序设计](https://www.icourse163.org/course/BIT-268001)》（中国大学MOOC平台）
+中国大学MOOC平台 相关在线课程
 
-课程实例 + 练习 + 测试
+## SOU
 
-## bit-1001870001
-
-北京理工大学 国家精品在线开放课 《[Python网络爬虫与信息提取](https://www.icourse163.org/course/BIT-1001870001)》（中国大学MOOC平台）
-
-课程实例 + 测试
-
-## sou-AI1402
-
-上海开放大学 《Python程序设计基础》
-
-课程实践
-
-## sou-AI1401
-
-上海开放大学 《数据结构与算法分析》
-
-## others
-
-其他功能演示
+上海开放大学 人工智能专业 系列课程
