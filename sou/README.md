@@ -13,3 +13,7 @@
 - [人工智能导论](./SE1452/README.md)
 - [数据结构与算法分析](./AI1401/README.md)
 - [模式识别与机器学习](./AI1304/README.md)
+- [深度学习](./AI1313/README.md)
+- [数据采集技术](./AI1307/README.md)
+- [大数据预处理](./AI1314/README.md)
+- [数据可视化](./AI1315/README.md)
